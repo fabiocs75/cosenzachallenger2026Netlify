@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscrizione Individuale — Naples GP 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #C8102E; --red-dark: #8B0000;
+      --blue: #003087; --blue-dark: #00194A; --blue-light: #1A4DB0;
+      --white: #FFFFFF; --off-white: #F2F4F8; --text: #0D1B2E;
+      --text-muted: #6B7A90; --gold: #F5C518; --border: #DDE2EA;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--off-white); color: var(--text); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--blue-dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .nav-logo { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; color: var(--white); letter-spacing: 2px; text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0 1.2rem; height: 64px; display: flex; align-items: center;
+      transition: color 0.2s; border-bottom: 3px solid transparent;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 64px; left: 0;
+      background: var(--blue-dark); min-width: 200px;
+      border-top: 2px solid var(--red); box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { height: auto; padding: 0.75rem 1.2rem; display: block; }
+
+    .page-header {
+      background: var(--blue-dark); padding: 7rem 2rem 3rem;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+    }
+    .page-header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--blue-light));
+    }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .page-breadcrumb {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); margin-bottom: 1rem;
+    }
+    .page-breadcrumb a { color: var(--gold); text-decoration: none; }
+    .page-title { font-family: 'Bebas Neue', cursive; font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--white); letter-spacing: 2px; line-height: 1; margin-bottom: 0.5rem; }
+    .page-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; color: rgba(255,255,255,0.7); letter-spacing: 1px; }
+
+    .form-layout {
+      max-width: 1100px; margin: 0 auto; padding: 3rem 2rem;
+      display: grid; grid-template-columns: 1fr 340px;
+      gap: 2rem; align-items: start;
+    }
+
+    .form-card { background: var(--white); box-shadow: 0 4px 30px rgba(0,0,0,0.08); }
+    .form-card-header {
+      background: var(--red); padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem;
+    }
+    .form-card-header .header-icon { font-size: 1.5rem; }
+    .form-card-header h2 { font-family: 'Bebas Neue', cursive; font-size: 1.6rem; color: var(--white); letter-spacing: 1px; }
+    .form-card-header p { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 0.2rem; }
+
+    .form-body { padding: 2.5rem; }
+
+    .form-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-muted); padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; margin-top: 2rem;
+    }
+    .form-section-title:first-child { margin-top: 0; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .form-group { margin-bottom: 1.5rem; }
+
+    label {
+      display: block; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--blue-dark); margin-bottom: 0.5rem;
+    }
+    label .req { color: var(--red); }
+
+    input[type="text"], input[type="email"], select {
+      width: 100%; padding: 0.875rem 1rem;
+      border: 2px solid var(--border); background: var(--off-white);
+      font-family: 'Barlow', sans-serif; font-size: 0.95rem; color: var(--text);
+      outline: none; transition: border-color 0.2s, background 0.2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    input:focus, select:focus { border-color: var(--blue); background: var(--white); }
+    input.error, select.error { border-color: var(--red); }
+
+    .select-wrapper { position: relative; }
+    .select-wrapper::after {
+      content: '▾'; position: absolute; right: 1rem; top: 50%;
+      transform: translateY(-50%); color: var(--text-muted); pointer-events: none; font-size: 0.85rem;
+    }
+
+    .field-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; }
+    .field-error { font-size: 0.8rem; color: var(--red); margin-top: 0.4rem; display: none; }
+
+    .form-privacy {
+      background: var(--off-white); padding: 1.25rem;
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.7;
+      margin-bottom: 1.5rem; border-left: 3px solid var(--blue-light);
+    }
+
+    .btn-submit {
+      width: 100%; padding: 1.1rem; background: var(--red);
+      color: var(--white); font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem; letter-spacing: 2px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-submit:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-submit:disabled { background: #9CA3AF; cursor: not-allowed; transform: none; }
+
+    .success-msg { display: none; padding: 2.5rem; text-align: center; }
+    .success-msg .check { font-size: 4rem; margin-bottom: 1rem; }
+    .success-msg h3 { font-family: 'Bebas Neue', cursive; font-size: 2rem; color: var(--blue-dark); letter-spacing: 1px; margin-bottom: 0.75rem; }
+    .success-msg p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; }
+
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .sidebar-card { background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .sidebar-card-header {
+      padding: 1rem 1.5rem; background: var(--blue-dark);
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold);
+    }
+    .sidebar-card-body { padding: 1.5rem; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .price-row:last-child { border-bottom: none; }
+    .price-row .cat { color: var(--text-muted); }
+    .price-row .price { font-weight: 700; color: var(--red); font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; }
+    .price-row .price.free { color: var(--blue); }
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .info-list li { display: flex; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    .info-list li:last-child { border-bottom: none; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--blue); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
+    .back-link:hover { color: var(--blue-dark); }
+    footer { background: #050D1A; color: rgba(255,255,255,0.5); padding: 2rem; text-align: center; font-size: 0.8rem; margin-top: 2rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .form-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">CCT <span>Eagles</span> Napoli</a>
+  <div class="nav-links">
+    <a href="index.html">Naples GP</a>
+    <div class="nav-dropdown">
+      <a href="#">Iscrizioni</a>
+      <div class="nav-dropdown-menu">
+        <a href="individuale.html">Iscrizione Individuale</a>
+        <a href="squadra.html">Iscrizione Squadra</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-breadcrumb"><a href="index.html">Naples GP 2026</a> › Iscrizioni › Individuale</div>
+    <h1 class="page-title">Iscrizione Individuale</h1>
+    <p class="page-subtitle">Sabato 28 Marzo 2026 · Centro Polifunzionale di Soccavo, Napoli</p>
+  </div>
+</div>
+
+<div class="form-layout">
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="header-icon">👤</div>
+      <div>
+        <h2>Modulo di Iscrizione</h2>
+        <p>I campi contrassegnati con * sono obbligatori</p>
+      </div>
+    </div>
+
+    <!-- NETLIFY FORM: invio nativo HTML, nessun fetch -->
+    <form
+      name="iscrizione-individuale"
+      method="POST"
+      action="/grazie.html"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      id="regForm"
+      onsubmit="return validate()"
+    >
+      <!-- Campo anti-spam nascosto -->
+      <input type="hidden" name="form-name" value="iscrizione-individuale">
+      <p style="display:none"><label>Non compilare: <input name="bot-field"></label></p>
+
+      <div class="form-body" id="formBody">
+        <div class="form-section-title">Dati personali</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cognome">Cognome <span class="req">*</span></label>
+            <input type="text" id="cognome" name="cognome" placeholder="Es. Rossi" required>
+            <div class="field-error" id="err-cognome">Campo obbligatorio</div>
+          </div>
+          <div class="form-group">
+            <label for="nome">Nome <span class="req">*</span></label>
+            <input type="text" id="nome" name="nome" placeholder="Es. Mario" required>
+            <div class="field-error" id="err-nome">Campo obbligatorio</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="nome@esempio.com" required>
+          <div class="field-hint">Riceverai la conferma di iscrizione a questo indirizzo</div>
+          <div class="field-error" id="err-email">Inserire un indirizzo email valido</div>
+        </div>
+
+        <div class="form-section-title">Dati torneo</div>
+
+        <div class="form-group">
+          <label for="categoria">Categoria Torneo <span class="req">*</span></label>
+          <div class="select-wrapper">
+            <select id="categoria" name="categoria" required>
+              <option value="">— Seleziona la categoria —</option>
+              <option value="Open">Open</option>
+              <option value="Veteran">Veteran</option>
+              <option value="Ladies">Ladies</option>
+              <option value="Under 20">Under 20</option>
+              <option value="Under 16">Under 16</option>
+              <option value="Under 12">Under 12</option>
+              <option value="Diversamente abili">Diversamente abili</option>
+            </select>
+          </div>
+          <div class="field-hint">Puoi iscriverti a una sola categoria individuale</div>
+          <div class="field-error" id="err-categoria">Selezionare una categoria</div>
+        </div>
+
+        <div class="form-group">
+          <label for="club">Club di Appartenenza</label>
+          <div class="select-wrapper">
+            <select id="club" name="club">
+              <option value="">— Seleziona il club —</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fistf">Codice FISTF</label>
+          <input type="text" id="fistf" name="fistf" placeholder="Es. ITA-001234">
+          <div class="field-hint">Codice tessera FISTF dell'iscritto per la stagione corrente</div>
+        </div>
+
+        <div class="form-privacy">
+          ℹ️ I dati personali forniti verranno utilizzati esclusivamente per la gestione delle iscrizioni al Naples Grand Prix 2026 organizzato da CCT Eagles Napoli (A.S.D.), nel rispetto del Regolamento EU 2016/679 (GDPR).
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Invia Iscrizione →
+        </button>
+      </div>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <div class="check">✅</div>
+      <h3>Iscrizione Inviata!</h3>
+      <p>La tua richiesta di iscrizione è stata ricevuta con successo.<br>
+      Controlla la tua email per la conferma.<br><br>
+      <strong>Ricorda di completare il pagamento entro il 25 marzo 2026</strong><br>
+      tramite bonifico o PayPal per finalizzare l'iscrizione.</p>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <a href="index.html" class="back-link">← Torna alle info torneo</a>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Quote di iscrizione</div>
+      <div class="sidebar-card-body">
+        <div class="price-row"><span class="cat">Open</span><span class="price">€ 15</span></div>
+        <div class="price-row"><span class="cat">Veteran</span><span class="price">€ 15</span></div>
+        <div class="price-row"><span class="cat">Ladies</span><span class="price">€ 7</span></div>
+        <div class="price-row"><span class="cat">Under 20</span><span class="price">€ 7</span></div>
+        <div class="price-row"><span class="cat">Under 16</span><span class="price">€ 7</span></div>
+        <div class="price-row"><span class="cat">Under 12</span><span class="price">€ 7</span></div>
+        <div class="price-row"><span class="cat">Div. Abili</span><span class="price free">Gratuito</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Informazioni utili</div>
+      <div class="sidebar-card-body">
+        <ul class="info-list">
+          <li><span>📅</span><span>Scadenza iscrizioni: <strong>25 Marzo 2026</strong></span></li>
+          <li><span>🏟️</span><span>Centro Polifunzionale di Soccavo, Viale Adriano, Napoli</span></li>
+          <li><span>⏰</span><span>Riunione ore 09:00 · Inizio gare ore 09:30</span></li>
+          <li><span>🎽</span><span>Abbigliamento sportivo obbligatorio</span></li>
+          <li><span>🪪</span><span>Tesseramento FISTF valido obbligatorio</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Pagamento</div>
+      <div class="sidebar-card-body">
+        <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7">
+          <strong style="color:var(--text);display:block;margin-bottom:0.5rem">Bonifico Bancario</strong>
+          A.S.D. CCT Eagles Napoli<br>
+          <span style="font-family:monospace;background:var(--off-white);padding:0.25rem 0.5rem;font-size:0.8rem;letter-spacing:1px">IT41R0103003411000001172018</span>
+          <br><br>
+          <strong style="color:var(--text);display:block;margin-bottom:0.25rem">PayPal</strong>
+          info@eaglesnapoli.it
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 CCT Eagles Napoli — <a href="index.html">Naples Grand Prix 2026</a>
+</footer>
+
+<script src="clubs.js"></script>
+<script>
+  window.onload = function() {
+    populateClubSelect('club');
+  };
+
+  // Validazione lato client: se fallisce blocca l'invio nativo
+  function validate() {
+    let ok = true;
+    [
+      { id: 'cognome',   errId: 'err-cognome',   type: 'text' },
+      { id: 'nome',      errId: 'err-nome',       type: 'text' },
+      { id: 'email',     errId: 'err-email',      type: 'email' },
+      { id: 'categoria', errId: 'err-categoria',  type: 'select' },
+    ].forEach(f => {
+      const el  = document.getElementById(f.id);
+      const err = document.getElementById(f.errId);
+      const valid = f.type === 'email'
+        ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim())
+        : el.value.trim() !== '';
+      el.classList.toggle('error', !valid);
+      err.style.display = valid ? 'none' : 'block';
+      if (!valid) ok = false;
+    });
+    if (ok) {
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Invio in corso...';
+    }
+    return ok; // true = il form viene inviato nativamente a Netlify
+  }
+</script>
+</body>
+</html>

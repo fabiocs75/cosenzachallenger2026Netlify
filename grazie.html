@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscrizione Confermata — Naples GP 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #C8102E; --blue: #003087; --blue-dark: #00194A;
+      --white: #FFFFFF; --off-white: #F2F4F8; --text: #0D1B2E;
+      --text-muted: #6B7A90; --gold: #F5C518; --border: #DDE2EA;
+    }
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--blue-dark);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem;
+      position: relative; overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+    }
+    .card {
+      position: relative; z-index: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-top: 4px solid var(--gold);
+      padding: 3.5rem 3rem;
+      max-width: 560px; width: 100%;
+      text-align: center;
+    }
+    .check { font-size: 5rem; margin-bottom: 1.5rem; display: block; }
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3rem; letter-spacing: 2px;
+      color: var(--white); margin-bottom: 1rem;
+    }
+    .subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; color: var(--gold);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    p { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 1rem; }
+    .payment-box {
+      background: rgba(255,255,255,0.08);
+      border-left: 4px solid var(--red);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      text-align: left;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+    }
+    .payment-box strong { color: var(--gold); display: block; margin-bottom: 0.3rem; }
+    .iban {
+      font-family: monospace; font-size: 0.85rem;
+      background: rgba(0,0,0,0.3); padding: 0.3rem 0.6rem;
+      letter-spacing: 1px; color: var(--white);
+    }
+    .btn {
+      display: inline-block; margin-top: 1.5rem;
+      padding: 0.9rem 2.5rem;
+      background: var(--gold); color: var(--blue-dark);
+      font-family: 'Bebas Neue', cursive; font-size: 1.2rem;
+      letter-spacing: 2px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #ffe05a; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="check">✅</span>
+    <h1>Iscrizione Confermata!</h1>
+    <p class="subtitle">Naples Grand Prix 2026</p>
+    <p>La tua richiesta di iscrizione è stata ricevuta correttamente.<br>
+    Riceverai una conferma all'indirizzo email indicato.</p>
+
+    <div class="payment-box">
+      <strong>⚠️ Per completare l'iscrizione effettua il pagamento entro il 25 Marzo 2026</strong>
+      Bonifico: A.S.D. CCT Eagles Napoli<br>
+      <span class="iban">IT41R0103003411000001172018</span><br><br>
+      oppure PayPal: <strong style="color:white">info@eaglesnapoli.it</strong>
+    </div>
+
+    <a href="index.html" class="btn">← Torna alla Home</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naples Grand Prix 2026 — CCT Eagles Napoli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #C8102E;
+      --red-dark: #8B0000;
+      --red-light: #E8253E;
+      --blue: #003087;
+      --blue-dark: #00194A;
+      --blue-light: #1A4DB0;
+      --white: #FFFFFF;
+      --off-white: #F2F4F8;
+      --text: #0D1B2E;
+      --text-muted: #6B7A90;
+      --gold: #F5C518;
+      --border: #DDE2EA;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links { display: flex; align-items: center; gap: 0; }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0 1.2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, background 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+    .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+    .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 64px; left: 0;
+      background: var(--blue-dark);
+      min-width: 200px;
+      border-top: 2px solid var(--red);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a {
+      height: auto;
+      padding: 0.75rem 1.2rem;
+      display: block;
+      border-bottom: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--blue-dark);
+    }
+
+    .hero-bg-left {
+      position: absolute;
+      top: 0; left: 0;
+      width: 58%;
+      height: 100%;
+      background: var(--red-dark);
+      clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 40px,
+          rgba(255,255,255,0.03) 40px,
+          rgba(255,255,255,0.03) 41px
+        );
+    }
+
+    .hero-accent {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 50%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 7rem 2rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-left {}
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: var(--blue-dark);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.9;
+      color: var(--white);
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title .line2 { color: var(--gold); }
+
+    .hero-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 1px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 3rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: rgba(255,255,255,0.9);
+      font-size: 1rem;
+    }
+
+    .hero-meta-item .icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      display: inline-block;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--blue-dark);
+    }
+    .btn-primary:hover { background: #ffe05a; transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+    .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero-date-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 1.5rem;
+      border-left: 4px solid var(--gold);
+    }
+
+    .hero-date-card .day-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-date-card .day-big {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3rem;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-date-card .day-content {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hero-date-card .timeline {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .tl-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .tl-time {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 45px;
+      font-size: 0.85rem;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--blue-dark);
+      letter-spacing: 1px;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--blue));
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── INFO ── */
+    .info-section { background: var(--off-white); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .info-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #2A3A4E;
+      margin-bottom: 1rem;
+    }
+
+    .info-highlight {
+      background: var(--blue-dark);
+      color: var(--white);
+      padding: 1.5rem 2rem;
+      border-left: 5px solid var(--gold);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .info-highlight strong { color: var(--gold); }
+
+    .info-card {
+      background: var(--white);
+      padding: 2rem;
+      border-top: 4px solid var(--red);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .info-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+
+    .info-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ── CATEGORIES ── */
+    .cat-section { background: var(--white); }
+
+    .cat-intro {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cat-card {
+      position: relative;
+      padding: 2rem 1.5rem;
+      border: 2px solid var(--border);
+      background: var(--white);
+      transition: all 0.25s;
+      overflow: hidden;
+    }
+
+    .cat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--blue);
+    }
+
+    .cat-card.team::before { background: var(--red); }
+    .cat-card.ladies::before { background: #9B59B6; }
+    .cat-card.under::before { background: #27AE60; }
+    .cat-card.disabled::before { background: var(--gold); }
+
+    .cat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+      border-color: transparent;
+    }
+
+    .cat-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-name {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 2rem;
+      color: var(--blue-dark);
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+    }
+
+    .cat-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .cat-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .cat-price .euro { font-size: 1rem; font-weight: 700; color: var(--red); }
+    .cat-price .amount { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: var(--red); line-height: 1; }
+    .cat-price .free { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: var(--gold); }
+
+    /* ── REGISTRATION ── */
+    .reg-section { background: var(--blue-dark); color: var(--white); }
+
+    .reg-section .section-title { color: var(--white); }
+    .reg-section .section-label { color: var(--gold); }
+
+    .reg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .reg-info p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1rem;
+    }
+
+    .reg-deadline {
+      background: var(--red);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .reg-deadline .dead-icon { font-size: 1.5rem; }
+    .reg-deadline .dead-text { font-size: 0.85rem; color: rgba(255,255,255,0.9); }
+    .reg-deadline .dead-date {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+    }
+
+    .reg-notes {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+    }
+
+    .reg-notes li { margin-bottom: 0.5rem; padding-left: 1rem; position: relative; list-style: none; }
+    .reg-notes li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
+
+    .reg-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cta-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--white);
+      transition: all 0.25s;
+      display: block;
+      border-top: 3px solid var(--red);
+    }
+
+    .cta-card:first-child { border-top-color: var(--gold); }
+    .cta-card:hover { background: rgba(255,255,255,0.12); transform: translateX(6px); }
+
+    .cta-card .cta-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.4rem;
+    }
+
+    .cta-card .cta-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+
+    .cta-card .cta-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .cta-card .cta-arrow {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    /* ── PAYMENT ── */
+    .pay-section { background: var(--off-white); }
+
+    .pay-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .pay-card {
+      background: var(--white);
+      padding: 2rem;
+      border-bottom: 4px solid var(--blue);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .pay-card:last-child { border-bottom-color: var(--red); }
+
+    .pay-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+
+    .pay-detail {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .pay-detail strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .pay-detail .iban {
+      font-family: monospace;
+      font-size: 0.95rem;
+      background: var(--off-white);
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+      color: var(--blue-dark);
+      font-weight: 600;
+    }
+
+    /* ── MATERIALS ── */
+    .mat-section { background: var(--white); }
+
+    .mat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .mat-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mat-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      color: #2A3A4E;
+      line-height: 1.6;
+    }
+
+    .mat-list li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      flex-shrink: 0;
+      margin-top: 0.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #050D1A;
+      color: rgba(255,255,255,0.6);
+      padding: 3rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .brand-name {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.8rem;
+      color: var(--white);
+      letter-spacing: 3px;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; }
+
+    footer h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--white); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-content { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-bg-left { width: 100%; clip-path: none; opacity: 0.7; }
+      .info-grid, .reg-grid, .pay-grid, .mat-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">CCT <span>Eagles</span> Napoli</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Naples GP</a>
+    <div class="nav-dropdown">
+      <a href="#">Iscrizioni</a>
+      <div class="nav-dropdown-menu">
+        <a href="individuale.html">Iscrizione Individuale</a>
+        <a href="squadra.html">Iscrizione Squadra</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-left"></div>
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-accent"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">⚽ Torneo Ufficiale FISTF</div>
+      <h1 class="hero-title">
+        Naples<br>
+        <span class="line2">Grand Prix</span><br>
+        2026
+      </h1>
+      <p class="hero-subtitle">Calcio da Tavolo Internazionale — Napoli</p>
+
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="icon">📅</div>
+          <span>28 – 29 Marzo 2026</span>
+        </div>
+        <div class="hero-meta-item">
+          <div class="icon">📍</div>
+          <span>Centro Polifunzionale di Soccavo, Viale Adriano, Napoli</span>
+        </div>
+        <div class="hero-meta-item">
+          <div class="icon">🏆</div>
+          <span>Torneo Internazionale FISTF</span>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="individuale.html" class="btn btn-primary">Iscrizione Individuale</a>
+        <a href="squadra.html" class="btn btn-secondary">Iscrizione Squadra</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-date-card">
+        <div class="day-label">Sabato</div>
+        <div class="day-big">28 Marzo</div>
+        <div class="day-content">Tornei individuali</div>
+        <div class="timeline">
+          <div class="tl-item"><span class="tl-time">09:00</span><span>Riunione dei partecipanti</span></div>
+          <div class="tl-item"><span class="tl-time">09:30</span><span>Inizio tornei individuali</span></div>
+          <div class="tl-item"><span class="tl-time">18:30</span><span>Cerimonia di premiazione</span></div>
+        </div>
+      </div>
+
+      <div class="hero-date-card">
+        <div class="day-label">Domenica</div>
+        <div class="day-big">29 Marzo</div>
+        <div class="day-content">Torneo a squadre</div>
+        <div class="timeline">
+          <div class="tl-item"><span class="tl-time">08:30</span><span>Riunione dei partecipanti</span></div>
+          <div class="tl-item"><span class="tl-time">09:00</span><span>Inizio torneo a squadre</span></div>
+          <div class="tl-item"><span class="tl-time">18:00</span><span>Cerimonia di premiazione</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section">
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-text">
+        <div class="section-label">Il torneo</div>
+        <h2 class="section-title">Informazioni</h2>
+        <div class="section-divider"></div>
+        <p>Il <strong>Naples GP 2026</strong> si svolgerà nei giorni 28 e 29 Marzo 2026 presso il Centro Polifunzionale di Soccavo in viale Adriano, Napoli.</p>
+        <p>Nella giornata di sabato sono previsti tutti i tornei delle categorie individuali, mentre nella giornata di domenica verrà disputato il torneo a squadre.</p>
+        <div class="info-highlight">
+          <strong>Tesseramento obbligatorio.</strong> Il Naples GP è un torneo internazionale FISTF: è richiesto a tutti i partecipanti di essere in regola con il tesseramento FISTF per la stagione corrente.
+        </div>
+      </div>
+      <div>
+        <div class="info-card" style="margin-bottom:1.5rem">
+          <h3>📋 Materiali di gioco</h3>
+          <p>48/60 campi Extreme Works su asse in legno multistrato con cornice di copertura. Porte metalliche. Palline a carico dei giocatori.</p>
+        </div>
+        <div class="info-card">
+          <h3>📜 Regolamento</h3>
+          <p>Regolamento di gioco FISTF 5.2 · Regolamento competizioni FISTF · Regolamento comportamentale FISCT. Abbigliamento sportivo obbligatorio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cat-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Gara</div>
+      <h2 class="section-title">Categorie e Quote</h2>
+      <div class="section-divider"></div>
+      <p class="cat-intro">Ogni partecipante può iscriversi a una sola categoria individuale. Il torneo a squadre si svolge domenica 29 marzo.</p>
+    </div>
+
+    <div class="cat-grid reveal">
+      <div class="cat-card team">
+        <div class="cat-tag">Domenica 29 marzo</div>
+        <div class="cat-name">Team</div>
+        <div class="cat-desc">Torneo a squadre</div>
+        <div class="cat-price">
+          <span class="euro">€</span><span class="amount">30</span>
+          <span style="font-size:0.75rem;color:var(--text-muted);margin-left:0.3rem">1ª squadra</span>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">2ª squadra €15 · Addizionali €10</div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Open</div>
+        <div class="cat-desc">Categoria individuale aperta</div>
+        <div class="cat-price"><span class="euro">€</span><span class="amount">15</span></div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Veteran</div>
+        <div class="cat-desc">Categoria individuale veterani</div>
+        <div class="cat-price"><span class="euro">€</span><span class="amount">15</span></div>
+      </div>
+
+      <div class="cat-card ladies">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Ladies</div>
+        <div class="cat-desc">Categoria individuale femminile</div>
+        <div class="cat-price"><span class="euro">€</span><span class="amount">7</span></div>
+      </div>
+
+      <div class="cat-card under">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Under 20</div>
+        <div class="cat-desc">Categoria individuale</div>
+        <div class="cat-price"><span class="euro">€</span><span class="amount">7</span></div>
+      </div>
+
+      <div class="cat-card under">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Under 16</div>
+        <div class="cat-desc">Categoria individuale</div>
+        <div class="cat-price"><span class="euro">€</span><span class="amount">7</span></div>
+      </div>
+
+      <div class="cat-card under">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Under 12</div>
+        <div class="cat-desc">Categoria individuale</div>
+        <div class="cat-price"><span class="euro">€</span><span class="amount">7</span></div>
+      </div>
+
+      <div class="cat-card disabled">
+        <div class="cat-tag">Sabato 28 marzo</div>
+        <div class="cat-name">Div. Abili</div>
+        <div class="cat-desc">Categoria diversamente abili</div>
+        <div class="cat-price"><span class="free">Gratuito</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRATION -->
+<section class="reg-section">
+  <div class="container">
+    <div class="reg-grid reveal">
+      <div class="reg-info">
+        <div class="section-label">Partecipa</div>
+        <h2 class="section-title">Iscrizioni</h2>
+        <div class="section-divider"></div>
+
+        <div class="reg-deadline">
+          <div class="dead-icon">⏰</div>
+          <div class="dead-text">
+            Scadenza iscrizioni<br>
+            <span class="dead-date">25 Marzo 2026</span>
+          </div>
+        </div>
+
+        <p>Le iscrizioni saranno accettate esclusivamente compilando il modulo di iscrizione in tutte le sue parti.</p>
+
+        <ul class="reg-notes">
+          <li>Nel caso in cui il numero di iscritti superi i 128 partecipanti, si terrà una fase di qualificazione il venerdì pomeriggio.</li>
+          <li>Gli iscritti che daranno forfait saranno tenuti a corrispondere la quota di iscrizione, come previsto dal Regolamento FISTF.</li>
+          <li>È richiesto tesseramento FISTF valido per la stagione corrente.</li>
+        </ul>
+      </div>
+
+      <div class="reg-ctas">
+        <a href="individuale.html" class="cta-card">
+          <div class="cta-label">Torneo individuale — Sabato</div>
+          <div class="cta-title">Iscrizione Individuale</div>
+          <div class="cta-desc">Open · Veteran · Ladies · Under 20/16/12 · Div. Abili</div>
+          <div class="cta-arrow">→</div>
+        </a>
+        <a href="squadra.html" class="cta-card">
+          <div class="cta-label">Torneo a squadre — Domenica</div>
+          <div class="cta-title">Iscrizione Squadra</div>
+          <div class="cta-desc">Prima squadra €30 · Seconda €15 · Addizionali €10</div>
+          <div class="cta-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="pay-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Pagamento</div>
+      <h2 class="section-title">Modalità di Pagamento</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="pay-grid reveal">
+      <div class="pay-card">
+        <h3>🏦 Bonifico Bancario</h3>
+        <div class="pay-detail">
+          Intestato a:<strong>A.S.D. CCT Eagles Napoli</strong>
+          Codice IBAN:<div class="iban">IT41R0103003411000001172018</div>
+        </div>
+      </div>
+      <div class="pay-card">
+        <h3>💳 PayPal</h3>
+        <div class="pay-detail">
+          Inviare il pagamento a:<strong>info@eaglesnapoli.it</strong>
+          <br>Indicare nella causale: nome, cognome e categoria di iscrizione.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-name">CCT Eagles Napoli</div>
+      <p>Via Agostino De Pretis, 88 — 80133 Napoli<br>
+      C.F. 93038400631 · P.IVA 05809861213<br>
+      <a href="mailto:info@eaglesnapoli.it" style="color:rgba(255,255,255,0.5)">info@eaglesnapoli.it</a></p>
+    </div>
+    <div>
+      <h4>Torneo</h4>
+      <a href="index.html">Naples GP 2026</a>
+      <a href="individuale.html">Iscrizione Individuale</a>
+      <a href="squadra.html">Iscrizione Squadra</a>
+    </div>
+    <div>
+      <h4>Info</h4>
+      <a href="https://www.fistf.com" target="_blank">FISTF</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contatti</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CCT Eagles Napoli — Tutti i diritti riservati</span>
+    <span>Naples Grand Prix 2026</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal animation
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
