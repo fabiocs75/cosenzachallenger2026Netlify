@@ -1,4 +1,4 @@
-# Naples GP 2026 — Guida al Deploy su Netlify
+# Cosenza GP 2026 — Guida al Deploy su Netlify
 
 ## Come funziona ora (senza Google, senza backend)
 
@@ -27,7 +27,7 @@ Nessun account Google, nessun server, nessun codice extra.
 4. Netlify pubblica il sito istantaneamente con un URL tipo:
    `https://random-name-123.netlify.app`
 5. Puoi rinominarlo: **Site settings → Site details → Change site name**
-   → diventa `https://napoli-gp-2026.netlify.app`
+   → diventa `https://Cosenza-gp-2026.netlify.app`
 
 ---
 
