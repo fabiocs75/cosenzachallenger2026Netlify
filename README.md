@@ -92,4 +92,4 @@ Se servissero più invii, il piano Pro costa $19/mese.
 | `index.html` | Pagina principale del torneo |
 | `individuale.html` | Form iscrizione individuale (Netlify Forms) |
 | `squadra.html` | Form iscrizione squadra (Netlify Forms) |
-| `clubs.js` | Lista club FISTF condivisa |
+| `clubs.js` | Lista club FISCT condivisa |
