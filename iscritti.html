@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscritti — Naples GP 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #C8102E; --red-dark: #8B0000;
+      --blue: #003087; --blue-dark: #00194A; --blue-light: #1A4DB0;
+      --white: #FFFFFF; --off-white: #F2F4F8; --text: #0D1B2E;
+      --text-muted: #6B7A90; --gold: #F5C518; --border: #DDE2EA;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--off-white); color: var(--text); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--blue-dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .nav-logo { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; color: var(--white); letter-spacing: 2px; text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0 1.2rem; height: 64px; display: flex; align-items: center;
+      transition: color 0.2s; border-bottom: 3px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a.active { border-bottom-color: var(--gold); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; }
+    .nav-dropdown-menu {
+      display: none; position: absolute; top: 64px; left: 0;
+      background: var(--blue-dark); min-width: 240px; white-space: nowrap;
+      border-top: 2px solid var(--red); box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a { height: auto; padding: 0.75rem 1.2rem; display: block; border-bottom: none; }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--blue-dark); padding: 7rem 2rem 3rem;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+    }
+    .page-header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--red), var(--blue-light));
+    }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .page-breadcrumb {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1rem;
+    }
+    .page-breadcrumb a { color: var(--gold); text-decoration: none; }
+    .page-title { font-family: 'Bebas Neue', cursive; font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--white); letter-spacing: 2px; line-height: 1; margin-bottom: 0.5rem; }
+    .page-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; color: rgba(255,255,255,0.7); letter-spacing: 1px; }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; gap: 0; overflow-x: auto;
+    }
+    .stat-item {
+      padding: 1.25rem 2rem; border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 0.2rem; white-space: nowrap;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+    }
+    .stat-value {
+      font-family: 'Bebas Neue', cursive; font-size: 2rem;
+      color: var(--blue-dark); line-height: 1;
+    }
+    .stat-value.red { color: var(--red); }
+
+    /* MAIN CONTENT */
+    .main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+    /* TABS */
+    .tabs {
+      display: flex; gap: 0; margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .tab-btn {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;
+      padding: 1rem 2rem; border: none; background: none; cursor: pointer;
+      color: var(--text-muted); border-bottom: 3px solid transparent;
+      margin-bottom: -2px; transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--blue); }
+    .tab-btn.active { color: var(--blue-dark); border-bottom-color: var(--red); }
+    .tab-btn .tab-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--off-white); color: var(--text-muted);
+      font-size: 0.7rem; font-weight: 700;
+      width: 22px; height: 22px; border-radius: 50%; margin-left: 0.5rem;
+    }
+    .tab-btn.active .tab-count { background: var(--red); color: var(--white); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center;
+    }
+    .search-box {
+      position: relative; flex: 1; min-width: 200px;
+    }
+    .search-box input {
+      width: 100%; padding: 0.7rem 1rem 0.7rem 2.5rem;
+      border: 2px solid var(--border); background: var(--white);
+      font-family: 'Barlow', sans-serif; font-size: 0.9rem; color: var(--text);
+      outline: none; transition: border-color 0.2s;
+    }
+    .search-box input:focus { border-color: var(--blue); }
+    .search-box::before {
+      content: '🔍'; position: absolute; left: 0.75rem; top: 50%;
+      transform: translateY(-50%); font-size: 0.85rem; pointer-events: none;
+    }
+    .filter-select {
+      padding: 0.7rem 2rem 0.7rem 1rem;
+      border: 2px solid var(--border); background: var(--white);
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text); outline: none; cursor: pointer;
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7A90'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.75rem center;
+    }
+
+    /* TABLES */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    thead { background: var(--blue-dark); }
+    thead th {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); padding: 1rem 1.25rem; text-align: left;
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:hover { background: #F7F9FF; }
+    tbody tr:last-child { border-bottom: none; }
+    td { padding: 0.9rem 1.25rem; font-size: 0.9rem; color: var(--text); vertical-align: top; }
+
+    .badge {
+      display: inline-block; padding: 0.2rem 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .badge-open     { background: #E3F2FD; color: #1565C0; }
+    .badge-veteran  { background: #FFF3E0; color: #E65100; }
+    .badge-ladies   { background: #F3E5F5; color: #7B1FA2; }
+    .badge-under    { background: #E8F5E9; color: #2E7D32; }
+    .badge-disabili { background: #FFFDE7; color: #F57F17; }
+
+    .players-list {
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.8;
+      white-space: pre-line; max-width: 260px;
+    }
+
+    /* EMPTY / LOADING */
+    .empty-state {
+      text-align: center; padding: 5rem 2rem;
+      background: var(--white); box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .empty-state h3 {
+      font-family: 'Bebas Neue', cursive; font-size: 1.8rem;
+      color: var(--blue-dark); letter-spacing: 1px; margin-bottom: 0.5rem;
+    }
+    .empty-state p { font-size: 0.9rem; color: var(--text-muted); }
+
+    .loading {
+      text-align: center; padding: 4rem;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 1rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+    }
+    .spinner {
+      display: inline-block; width: 32px; height: 32px;
+      border: 3px solid var(--border); border-top-color: var(--blue);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+      margin-bottom: 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-state {
+      background: #FFF0F0; border-left: 4px solid var(--red);
+      padding: 1.5rem; font-size: 0.9rem; color: var(--red);
+      margin-bottom: 1rem;
+    }
+
+    /* NO RESULTS */
+    .no-results { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 0.9rem; }
+
+    footer { background: #050D1A; color: rgba(255,255,255,0.5); padding: 2rem; text-align: center; font-size: 0.8rem; margin-top: 2rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats-inner { gap: 0; }
+      .stat-item { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">CCT <span>Eagles</span> Napoli</a>
+  <div class="nav-links">
+    <a href="index.html">Naples GP</a>
+    <div class="nav-dropdown">
+      <a href="#">Iscrizioni</a>
+      <div class="nav-dropdown-menu">
+        <a href="individuale.html">Iscrizione Individuale</a>
+        <a href="squadra.html">Iscrizione Squadra</a>
+      </div>
+    </div>
+    <a href="iscritti.html" class="active">Iscritti</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-breadcrumb"><a href="index.html">Naples GP 2026</a> › Iscritti</div>
+    <h1 class="page-title">Elenco Iscritti</h1>
+    <p class="page-subtitle">Naples Grand Prix 2026 · Aggiornato in tempo reale</p>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-label">Iscritti Individuali</span>
+      <span class="stat-value" id="statIndividuali">—</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Squadre Iscritte</span>
+      <span class="stat-value red" id="statSquadre">—</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Open</span>
+      <span class="stat-value" id="statOpen">—</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Veteran</span>
+      <span class="stat-value" id="statVeteran">—</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Ladies</span>
+      <span class="stat-value" id="statLadies">—</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Under</span>
+      <span class="stat-value" id="statUnder">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div id="errorBox" class="error-state" style="display:none"></div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('individuali')">
+      👤 Individuali <span class="tab-count" id="countInd">0</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('squadre')">
+      🏆 Squadre <span class="tab-count" id="countSqd">0</span>
+    </button>
+  </div>
+
+  <!-- TAB INDIVIDUALI -->
+  <div class="tab-panel active" id="panel-individuali">
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" id="searchInd" placeholder="Cerca per nome, club..." oninput="renderIndividuali()">
+      </div>
+      <select class="filter-select" id="filterCategoria" onchange="renderIndividuali()">
+        <option value="">Tutte le categorie</option>
+        <option value="Open">Open</option>
+        <option value="Veteran">Veteran</option>
+        <option value="Ladies">Ladies</option>
+        <option value="Under 20">Under 20</option>
+        <option value="Under 16">Under 16</option>
+        <option value="Under 12">Under 12</option>
+        <option value="Diversamente abili">Div. Abili</option>
+      </select>
+    </div>
+    <div id="tableIndividuali">
+      <div class="loading"><div class="spinner"></div><br>Caricamento iscritti...</div>
+    </div>
+  </div>
+
+  <!-- TAB SQUADRE -->
+  <div class="tab-panel" id="panel-squadre">
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" id="searchSqd" placeholder="Cerca per club, responsabile..." oninput="renderSquadre()">
+      </div>
+    </div>
+    <div id="tableSquadre">
+      <div class="loading"><div class="spinner"></div><br>Caricamento squadre...</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 CCT Eagles Napoli — <a href="index.html">Naples Grand Prix 2026</a>
+</footer>
+
+<script>
+  let dataIndividuali = [];
+  let dataSquadre = [];
+
+  // ── CARICA DATI ────────────────────────────────────────────
+  async function loadData() {
+    try {
+      const res = await fetch('/.netlify/functions/iscritti');
+      if (!res.ok) throw new Error(`Errore HTTP ${res.status}`);
+      const json = await res.json();
+      if (json.error) throw new Error(json.error);
+
+      dataIndividuali = json.individuali || [];
+      dataSquadre     = json.squadre     || [];
+
+      updateStats();
+      renderIndividuali();
+      renderSquadre();
+
+    } catch(err) {
+      document.getElementById('errorBox').style.display = 'block';
+      document.getElementById('errorBox').textContent =
+        '⚠️ Impossibile caricare i dati: ' + err.message;
+      document.getElementById('tableIndividuali').innerHTML = '';
+      document.getElementById('tableSquadre').innerHTML = '';
+    }
+  }
+
+  // ── STATS ──────────────────────────────────────────────────
+  function updateStats() {
+    document.getElementById('statIndividuali').textContent = dataIndividuali.length;
+    document.getElementById('statSquadre').textContent     = dataSquadre.length;
+    document.getElementById('statOpen').textContent    = dataIndividuali.filter(r => r.categoria === 'Open').length;
+    document.getElementById('statVeteran').textContent = dataIndividuali.filter(r => r.categoria === 'Veteran').length;
+    document.getElementById('statLadies').textContent  = dataIndividuali.filter(r => r.categoria === 'Ladies').length;
+    document.getElementById('statUnder').textContent   = dataIndividuali.filter(r => r.categoria.startsWith('Under')).length;
+    document.getElementById('countInd').textContent = dataIndividuali.length;
+    document.getElementById('countSqd').textContent = dataSquadre.length;
+  }
+
+  // ── BADGE CATEGORIA ────────────────────────────────────────
+  function badgeClass(cat) {
+    if (cat === 'Open')    return 'badge-open';
+    if (cat === 'Veteran') return 'badge-veteran';
+    if (cat === 'Ladies')  return 'badge-ladies';
+    if (cat.startsWith('Under')) return 'badge-under';
+    return 'badge-disabili';
+  }
+
+  // ── RENDER INDIVIDUALI ─────────────────────────────────────
+  function renderIndividuali() {
+    const search = document.getElementById('searchInd').value.toLowerCase();
+    const catFilter = document.getElementById('filterCategoria').value;
+
+    let rows = dataIndividuali.filter(r => {
+      const matchSearch = !search ||
+        `${r.cognome} ${r.nome} ${r.club} ${r.fistf}`.toLowerCase().includes(search);
+      const matchCat = !catFilter || r.categoria === catFilter;
+      return matchSearch && matchCat;
+    });
+
+    const container = document.getElementById('tableIndividuali');
+
+    if (dataIndividuali.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <span class="icon">📋</span>
+          <h3>Nessun iscritto</h3>
+          <p>Non ci sono ancora iscrizioni individuali.</p>
+        </div>`;
+      return;
+    }
+
+    if (rows.length === 0) {
+      container.innerHTML = `<div class="no-results">Nessun risultato per la ricerca.</div>`;
+      return;
+    }
+
+    // Ordina per categoria poi per cognome
+    rows.sort((a, b) => {
+      if (a.categoria < b.categoria) return -1;
+      if (a.categoria > b.categoria) return 1;
+      return a.cognome.localeCompare(b.cognome);
+    });
+
+    let n = 1;
+    const trs = rows.map(r => `
+      <tr>
+        <td style="color:var(--text-muted);font-size:0.8rem;width:40px">${n++}</td>
+        <td><strong>${escHtml(r.cognome)}</strong> ${escHtml(r.nome)}</td>
+        <td><span class="badge ${badgeClass(r.categoria)}">${escHtml(r.categoria)}</span></td>
+        <td>${escHtml(r.club) || '<span style="color:var(--text-muted)">—</span>'}</td>
+        <td style="font-family:monospace;font-size:0.82rem">${escHtml(r.fistf) || '—'}</td>
+      </tr>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Giocatore</th>
+              <th>Categoria</th>
+              <th>Club</th>
+              <th>Codice FISTF</th>
+            </tr>
+          </thead>
+          <tbody>${trs}</tbody>
+        </table>
+      </div>`;
+  }
+
+  // ── RENDER SQUADRE ─────────────────────────────────────────
+  function renderSquadre() {
+    const search = document.getElementById('searchSqd').value.toLowerCase();
+
+    let rows = dataSquadre.filter(r => {
+      return !search ||
+        `${r.resp_cognome} ${r.resp_nome} ${r.club1}`.toLowerCase().includes(search);
+    });
+
+    const container = document.getElementById('tableSquadre');
+
+    if (dataSquadre.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <span class="icon">🏆</span>
+          <h3>Nessuna squadra</h3>
+          <p>Non ci sono ancora iscrizioni squadra.</p>
+        </div>`;
+      return;
+    }
+
+    if (rows.length === 0) {
+      container.innerHTML = `<div class="no-results">Nessun risultato per la ricerca.</div>`;
+      return;
+    }
+
+    rows.sort((a, b) => a.club1.localeCompare(b.club1));
+
+    let n = 1;
+    const trs = rows.map(r => {
+      // Conta squadre extra
+      let extraCount = 0;
+      try { extraCount = JSON.parse(r.squadre_extra || '[]').length; } catch(e) {}
+      const totSquadre = 1 + extraCount;
+
+      return `
+        <tr>
+          <td style="color:var(--text-muted);font-size:0.8rem;width:40px">${n++}</td>
+          <td><strong>${escHtml(r.club1)}</strong></td>
+          <td>${escHtml(r.resp_cognome)} ${escHtml(r.resp_nome)}</td>
+          <td class="players-list">${escHtml(r.giocatori1).replace(/\n/g, '<br>')}</td>
+          <td style="text-align:center">
+            <span class="badge badge-open">${totSquadre} squadr${totSquadre === 1 ? 'a' : 'e'}</span>
+          </td>
+        </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Club</th>
+              <th>Responsabile</th>
+              <th>Giocatori 1ª Squadra</th>
+              <th>N° Squadre</th>
+            </tr>
+          </thead>
+          <tbody>${trs}</tbody>
+        </table>
+      </div>`;
+  }
+
+  // ── TAB SWITCH ─────────────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`panel-${name}`).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // ── UTILITY ────────────────────────────────────────────────
+  function escHtml(str) {
+    return String(str || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── AVVIO ──────────────────────────────────────────────────
+  loadData();
+</script>
+</body>
+</html>
