@@ -444,11 +444,10 @@
     return ok;
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  // Serializza le squadre extra poi lascia inviare nativamente il form a Netlify
+  function handleSubmit() {
     if (!validate()) return false;
 
-    // Serializza le squadre extra nel campo hidden
     const extras = [];
     document.querySelectorAll('.extra-team').forEach((div, i) => {
       extras.push({
@@ -463,24 +462,7 @@
     btn.disabled = true;
     btn.textContent = 'Invio in corso...';
 
-    const form = document.getElementById('regForm');
-    const data = new FormData(form);
-
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString()
-    })
-    .then(() => {
-      form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-    })
-    .catch(() => {
-      form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-    });
-
-    return false;
+    return true; // lascia proseguire l'invio nativo → Netlify lo registra e redirect a grazie.html
   }
 </script>
 </body>
