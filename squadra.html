@@ -441,28 +441,22 @@
       err.style.display = valid ? 'none' : 'block';
       if (!valid) ok = false;
     });
-    return ok;
-  }
-
-  // Serializza le squadre extra poi lascia inviare nativamente il form a Netlify
-  function handleSubmit() {
-    if (!validate()) return false;
-
-    const extras = [];
-    document.querySelectorAll('.extra-team').forEach((div, i) => {
-      extras.push({
-        squadra: i + 2,
-        club: div.querySelector('.extra-club')?.value || '',
-        giocatori: div.querySelector('.extra-players')?.value.trim() || ''
+    if (ok) {
+      const extras = [];
+      document.querySelectorAll('.extra-team').forEach((div, i) => {
+        extras.push({
+          squadra: i + 2,
+          club: div.querySelector('.extra-club')?.value || '',
+          giocatori: div.querySelector('.extra-players')?.value.trim() || ''
+        });
       });
-    });
-    document.getElementById('squadre_extra_data').value = JSON.stringify(extras);
+      document.getElementById('squadre_extra_data').value = JSON.stringify(extras);
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Invio in corso...';
-
-    return true; // lascia proseguire l'invio nativo → Netlify lo registra e redirect a grazie.html
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Invio in corso...';
+    }
+    return ok; // lascia proseguire l'invio nativo → Netlify lo registra e redirect a grazie.html
   }
 </script>
 </body>
