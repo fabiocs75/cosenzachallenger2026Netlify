@@ -1,4 +1,4 @@
-# Cosenza GP 2026 — Guida al Deploy su Netlify
+# Cosenza Challenger150 2026 — Guida al Deploy su Netlify
 
 ## Come funziona ora (senza Google, senza backend)
 
