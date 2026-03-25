@@ -31,7 +31,7 @@ exports.handler = async function(event) {
   if (formName === 'iscrizione-individuale') {
     emails = buildEmailsIndividuale(data, RESEND_KEY);
   } else if (formName === 'iscrizione-squadra') {
-    emails = buildEmailsSquadra(data, RESEND_KEY);
+    //emails = buildEmailsSquadra(data, RESEND_KEY);
   } else {
     return { statusCode: 200, body: 'Form non gestito, nessuna email inviata' };
   }
