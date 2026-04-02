@@ -146,15 +146,6 @@
     }
     .btn-add-team:hover { background: rgba(26,77,176,0.05); border-color: var(--blue); color: var(--blue); }
 
-    .price-note {
-      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
-      color: var(--white); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
-      font-size: 0.9rem; line-height: 1.7;
-    }
-    .price-note strong { color: var(--gold); }
-    .price-note .price-breakdown { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
-    .price-note .pb-item { background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; }
-
     .form-privacy {
       background: var(--off-white); padding: 1.25rem;
       font-size: 0.82rem; color: var(--text-muted); line-height: 1.7;
@@ -169,11 +160,6 @@
     }
     .btn-submit:hover { background: var(--blue-dark); transform: translateY(-1px); }
     .btn-submit:disabled { background: #9CA3AF; cursor: not-allowed; transform: none; }
-
-    .success-msg { display: none; padding: 2.5rem; text-align: center; }
-    .success-msg .check { font-size: 4rem; margin-bottom: 1rem; }
-    .success-msg h3 { font-family: 'Bebas Neue', cursive; font-size: 2rem; color: var(--blue-dark); letter-spacing: 1px; margin-bottom: 0.75rem; }
-    .success-msg p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; }
 
     .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
     .sidebar-card { background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
@@ -245,13 +231,12 @@
       data-netlify="true"
       netlify-honeypot="bot-field"
       id="regForm"
-      onsubmit="return validate()"
+      onsubmit="return handleSubmit()"
     >
       <input type="hidden" name="form-name" value="iscrizione-squadra">
       <p style="display:none"><label>Non compilare: <input name="bot-field"></label></p>
 
-      <!-- Campo hidden che raccoglie squadre extra serializzate -->
-      <input type="hidden" name="squadre_extra" id="squadre_extra_data">
+      <!-- nessun campo extra -->
 
       <div class="form-body" id="formBody">
 
@@ -271,18 +256,31 @@
         </div>
 
         <div class="form-group">
-          <label for="resp-email">Email Responsabile</span></label>
-          <input type="email" id="resp-email" name="resp_email" placeholder="responsabile@esempio.com">
-          <div class="field-hint">Inserire indirizzo mail per ricevere la conferma di iscrizione</div>
+          <label for="resp-email">Email Responsabile </label>
+          <input type="email" id="resp-email" name="resp_email" placeholder="responsabile@esempio.com" required>
+          <div class="field-hint">Il responsabile riceverà le comunicazioni relative all'iscrizione</div>
           <div class="field-error" id="err-resp-email">Inserire un indirizzo email valido</div>
         </div>
 
         <div class="form-group">
-          <label for="resp-fistf">Codice FISTF Squadra</label>
+          <label for="resp-fistf">Codice FISTF Responsabile</label>
           <input type="text" id="resp-fistf" name="resp_fistf" placeholder="Es. ITA-001234">
         </div>
 
-        <div class="form-section-title">Prima Squadra — € 30</div>
+        <div class="form-section-title">Squadra</div>
+
+        <div class="form-group">
+          <label for="tipo-squadra">Tipo squadra da iscrivere <span class="req">*</span></label>
+          <div class="select-wrapper">
+            <select id="tipo-squadra" name="tipo_squadra" required onchange="updateTipoSquadra()">
+              <option value="">— Seleziona il tipo —</option>
+              <option value="1ª Squadra — € 30">1ª Squadra — € 30</option>
+              <option value="2ª Squadra — € 15">2ª Squadra — € 15</option>
+              <option value="Squadra Addizionale — € 10">Squadra Addizionale — € 10</option>
+            </select>
+          </div>
+          <div class="field-error" id="err-tipo-squadra">Selezionare il tipo di iscrizione</div>
+        </div>
 
         <div class="form-group">
           <label for="club1">Club di Appartenenza <span class="req">*</span></label>
@@ -295,18 +293,12 @@
         </div>
 
         <div class="form-group">
-          <label for="giocatori1">Giocatori</span></label>
+          <label for="giocatori1">Giocatori </label>
           <textarea id="giocatori1" name="giocatori_1"
-            placeholder="Inserisci i nomi dei giocatori, uno per riga&#10;Es: Rossi Mario&#10;Bianchi Luca&#10;Verdi Antonio"></textarea>
+            placeholder="Inserisci i nomi dei giocatori, uno per riga&#10;Es: Rossi Mario&#10;Bianchi Luca&#10;Verdi Antonio" required></textarea>
           <div class="field-hint">Inserisci cognome e nome di ogni giocatore, uno per riga</div>
+          <div class="field-error" id="err-giocatori1">Campo obbligatorio</div>
         </div>
-
-        <!-- Squadre aggiuntive (aggiunte dinamicamente) -->
-        <div id="extraTeamsContainer"></div>
-
-        <button class="btn-add-team" type="button" onclick="addExtraTeam()">
-          + Aggiungi altra squadra
-        </button>
 
         <div class="form-privacy">
           ℹ️ I dati personali forniti verranno utilizzati esclusivamente per la gestione delle iscrizioni al Cosenza Challenger150 2026 organizzato da A.S. Cosenza, nel rispetto del Regolamento EU 2016/679 (GDPR).
@@ -318,14 +310,6 @@
       </div>
     </form>
 
-    <div class="success-msg" id="successMsg">
-      <div class="check">✅</div>
-      <h3>Iscrizione Inviata!</h3>
-      <p>La richiesta di iscrizione squadra è stata ricevuta con successo.<br>
-      Il responsabile riceverà una conferma via email.<br><br>
-      <strong>Ricorda di completare il pagamento entro il 25 marzo 2026</strong><br>
-      tramite bonifico o PayPal per finalizzare l'iscrizione.</p>
-    </div>
   </div>
 
   <!-- SIDEBAR -->
@@ -356,11 +340,10 @@
 
     <div class="sidebar-card">
       <div class="sidebar-card-header">Pagamento</div>
-      <div class="sidebar-card-body">
+       <div class="sidebar-card-body">
         <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7">
-
           <strong style="color:var(--text);display:block;margin-bottom:0.25rem">PayPal</strong>
-          info@eaglesnapoli.it
+          masaniello@gmail.com
         </div>
       </div>
     </div>
@@ -373,43 +356,9 @@
 
 <script src="clubs.js"></script>
 <script>
-  let extraTeamCount = 0;
-
   window.onload = function() {
     populateClubSelect('club1');
   };
-
-  function addExtraTeam() {
-    extraTeamCount++;
-    const num = extraTeamCount + 1;
-    const price = extraTeamCount === 1 ? '€ 15' : '€ 10';
-
-    const div = document.createElement('div');
-    div.className = 'extra-team';
-    div.id = `extraTeam${extraTeamCount}`;
-    div.innerHTML = `
-      <div class="team-label">${num}ª Squadra — ${price}</div>
-      <button class="remove-btn" type="button" onclick="removeExtraTeam(${extraTeamCount})">✕</button>
-      <div class="form-group">
-        <label>Club</label>
-        <div class="select-wrapper">
-          <select id="extraClub${extraTeamCount}" class="extra-club"></select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Giocatori</label>
-        <textarea id="extraGiocatori${extraTeamCount}" class="extra-players"
-          placeholder="Cognome Nome, uno per riga"></textarea>
-      </div>
-    `;
-    document.getElementById('extraTeamsContainer').appendChild(div);
-    populateClubSelect(`extraClub${extraTeamCount}`);
-  }
-
-  function removeExtraTeam(id) {
-    const el = document.getElementById(`extraTeam${id}`);
-    if (el) el.remove();
-  }
 
   function validate() {
     let ok = true;
@@ -417,6 +366,7 @@
       { id: 'resp-cognome', errId: 'err-resp-cognome', type: 'text' },
       { id: 'resp-nome',    errId: 'err-resp-nome',    type: 'text' },
       { id: 'resp-email',   errId: 'err-resp-email',   type: 'email' },
+      { id: 'tipo-squadra', errId: 'err-tipo-squadra', type: 'select' },
       { id: 'club1',        errId: 'err-club1',        type: 'select' },
       { id: 'giocatori1',   errId: 'err-giocatori1',   type: 'text' },
     ].forEach(f => {
@@ -429,22 +379,15 @@
       err.style.display = valid ? 'none' : 'block';
       if (!valid) ok = false;
     });
-    if (ok) {
-      const extras = [];
-      document.querySelectorAll('.extra-team').forEach((div, i) => {
-        extras.push({
-          squadra: i + 2,
-          club: div.querySelector('.extra-club')?.value || '',
-          giocatori: div.querySelector('.extra-players')?.value.trim() || ''
-        });
-      });
-      document.getElementById('squadre_extra_data').value = JSON.stringify(extras);
+    return ok;
+  }
 
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Invio in corso...';
-    }
-    return ok; // lascia proseguire l'invio nativo → Netlify lo registra e redirect a grazie.html
+  function handleSubmit() {
+    if (!validate()) return false;
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Invio in corso...';
+    return true;
   }
 </script>
 </body>
